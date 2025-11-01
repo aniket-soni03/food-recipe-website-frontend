@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import "./NutritionPage.css";
 
-const API_KEY = "0764da071c364f24bce1b40ad91f4be3"; // replace with env var in production
+const API_KEY = "8ef078be40b7421fba9355bef04a32c1";
 
 const NutritionPage = () => {
   const { id } = useParams();
@@ -12,22 +12,24 @@ const NutritionPage = () => {
 
   useEffect(() => {
     if (!id) return;
+
     const load = async () => {
       setLoading(true);
       try {
         const res = await fetch(
           `https://api.spoonacular.com/recipes/${id}/nutritionWidget.json?apiKey=${API_KEY}`
         );
-        if (!res.ok) throw new Error("No nutrition");
+        if (!res.ok) throw new Error("No nutrition data");
         const data = await res.json();
         setNutri(data);
       } catch (e) {
-        console.error("Nutrition fetch error", e);
+        console.error("Nutrition fetch error:", e);
         setNutri(null);
       } finally {
         setLoading(false);
       }
     };
+
     load();
   }, [id]);
 
@@ -37,13 +39,12 @@ const NutritionPage = () => {
         <Link to="/" id="back-btn" className="back-link">
           ← Back to Search
         </Link>
+
         <h2 className="nutrition-heading">🍽️ Nutrition Details</h2>
 
         {loading && <p className="nutrition-loading">Loading nutrition...</p>}
         {!loading && !nutri && (
-          <p className="nutrition-empty">
-            No nutrition data available for this recipe.
-          </p>
+          <p className="nutrition-empty">No nutrition data available for this recipe.</p>
         )}
 
         {nutri && (

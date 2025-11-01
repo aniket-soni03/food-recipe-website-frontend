@@ -1,11 +1,13 @@
-// src/Components/FoodSearch.jsx
 import React, { useEffect, useState, useRef } from "react";
 import FoodCards from "./FoodCards";
 import CardAnimation from "./CardAnimation";
 import { useSearch } from "./SearchContext";
 import "./FoodSearchCss.css";
+import FoodMenu from "./FoodMenu";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
-const API_KEY = "0764da071c364f24bce1b40ad91f4be3";
+const API_KEY = "8ef078be40b7421fba9355bef04a32c1";
 
 const FoodSearch = () => {
   const { recipes, setRecipes, searchQuery, setSearchQuery } = useSearch();
@@ -17,7 +19,29 @@ const FoodSearch = () => {
   const cuisines = ["Indian", "Italian", "Mexican", "Chinese", "American", "Thai", "French"];
   const ingredients = ["chicken", "tomato", "onion", "garlic", "cheese", "egg", "pasta", "rice", "potato", "fish"];
 
-  // live suggestions based on localInput (fast)
+  // ✅ Initialize AOS
+  useEffect(() => {
+    Aos.init({
+      duration: 800,
+      offset: 100,
+      easing: "ease-in-out",
+      once: false,
+    });
+  }, []);
+
+  // ✅ Refresh AOS when recipes change
+  useEffect(() => {
+    Aos.refresh();
+  }, [recipes]);
+
+  // ✅ Show default recipes when first loaded
+  useEffect(() => {
+    if (!searchQuery && recipes.length === 0) {
+      handleSearch("paneer"); // default search
+    }
+  }, []); // only on mount
+
+  // ✅ Live suggestions
   useEffect(() => {
     const run = async () => {
       if (localInput.trim().length < 2) {
@@ -26,7 +50,9 @@ const FoodSearch = () => {
       }
       try {
         const res = await fetch(
-          `https://api.spoonacular.com/recipes/autocomplete?query=${encodeURIComponent(localInput)}&number=8&apiKey=${API_KEY}`
+          `https://api.spoonacular.com/recipes/autocomplete?query=${encodeURIComponent(
+            localInput
+          )}&number=8&apiKey=${API_KEY}`
         );
         const data = await res.json();
         const apiTitles = Array.isArray(data) ? data.map((d) => d.title) : [];
@@ -43,20 +69,23 @@ const FoodSearch = () => {
     return () => clearTimeout(t);
   }, [localInput]);
 
-  // close suggestions on outside click
+  // ✅ Close suggestions on outside click
   useEffect(() => {
     const onDoc = (e) => {
-      if (inputRef.current && !inputRef.current.contains(e.target)) setSuggestions([]);
+      if (inputRef.current && !inputRef.current.contains(e.target))
+        setSuggestions([]);
     };
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
-  // fetch helpers
+  // ✅ Fetch helpers
   const fetchVideos = async (q) => {
     try {
       const res = await fetch(
-        `https://api.spoonacular.com/food/videos/search?query=${encodeURIComponent(q)}&number=12&apiKey=${API_KEY}`
+        `https://api.spoonacular.com/food/videos/search?query=${encodeURIComponent(
+          q
+        )}&number=12&apiKey=${API_KEY}`
       );
       const data = await res.json();
       return Array.isArray(data.videos) ? data.videos : [];
@@ -68,7 +97,9 @@ const FoodSearch = () => {
   const fetchRecipes = async (q) => {
     try {
       const res = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${encodeURIComponent(q)}&number=12&addRecipeInformation=true&fillIngredients=true&apiKey=${API_KEY}`
+        `https://api.spoonacular.com/recipes/complexSearch?query=${encodeURIComponent(
+          q
+        )}&number=12&addRecipeInformation=true&fillIngredients=true&apiKey=${API_KEY}`
       );
       const data = await res.json();
       return data.results || [];
@@ -78,24 +109,36 @@ const FoodSearch = () => {
   };
 
   const mergeRecipesWithVideos = (recipesList, videosList) => {
-    if (!videosList || videosList.length === 0) return recipesList.map((r) => ({ ...r, video: null }));
-    const lowerVideos = videosList.map((v) => ({ ...v, short: (v.shortTitle || v.title || "").toLowerCase() }));
+    if (!videosList || videosList.length === 0)
+      return recipesList.map((r) => ({ ...r, video: null }));
+    const lowerVideos = videosList.map((v) => ({
+      ...v,
+      short: (v.shortTitle || v.title || "").toLowerCase(),
+    }));
     return recipesList.map((r) => {
       const title = (r.title || "").toLowerCase();
-      const match = lowerVideos.find(v => title.includes(v.short) || v.short.includes(title) || v.title?.toLowerCase().includes(title.split(" ")[0]));
+      const match = lowerVideos.find(
+        (v) =>
+          title.includes(v.short) ||
+          v.short.includes(title) ||
+          v.title?.toLowerCase().includes(title.split(" ")[0])
+      );
       return { ...r, video: match || null };
     });
   };
 
-  // perform search (when user confirms)
+  // ✅ Perform search
   const handleSearch = async (customQuery) => {
     const q = (customQuery ?? localInput).trim();
     if (!q) return;
-    setSearchQuery(q); // persist the search term in context
+    setSearchQuery(q);
     setLoading(true);
     setRecipes([]);
     try {
-      const [recipesRes, videosRes] = await Promise.all([fetchRecipes(q), fetchVideos(q)]);
+      const [recipesRes, videosRes] = await Promise.all([
+        fetchRecipes(q),
+        fetchVideos(q),
+      ]);
       const merged = mergeRecipesWithVideos(recipesRes, videosRes);
       setRecipes(merged);
     } catch (err) {
@@ -112,48 +155,62 @@ const FoodSearch = () => {
     handleSearch(s);
   };
 
-  // keep localInput in sync when context searchQuery changes (e.g., on back/navigation)
-useEffect(() => {
-  setLocalInput(searchQuery || "");
-  // ✅ Prevent re-showing suggestions when returning from another page
-  setSuggestions([]);
-}, [searchQuery]);
-
+  useEffect(() => {
+    setLocalInput(searchQuery || "");
+    setSuggestions([]);
+  }, [searchQuery]);
 
   return (
-    <div className="foodsearch-wrap">
-      <CardAnimation />
-      <div className="search-inner">
-        <h2 className="search-title">🍳 Smart Recipe Finder</h2>
+    <>
+      <div data-aos="fade-up">
+        <FoodMenu onCategorySelect={(category) => handleSearch(category)} />
+      </div>
 
-        <div className="input-wrap" ref={inputRef}>
-          <div className="search-row">
-            <input
-              id="search-input"
-              value={localInput}
-              onChange={(e) => setLocalInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-              placeholder="Search by ingredient, cuisine or keyword..."
-            />
-            <button id="search-btn" onClick={() => handleSearch()}>
-              Search
-            </button>
+      <div className="foodsearch-wrap" data-aos="fade-up">
+        <CardAnimation />
+
+        {/* 🔹 Search Section */}
+        <div className="search-inner" data-aos="zoom-in">
+          <h2 className="search-title" data-aos="fade-down">
+            🍳 Smart Recipe Finder
+          </h2>
+
+          <div className="input-wrap" ref={inputRef}>
+            <div className="search-row" data-aos="fade-up">
+              <input
+                id="search-input"
+                value={localInput}
+                onChange={(e) => setLocalInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                placeholder="Search by ingredient, cuisine or keyword..."
+              />
+              <button id="search-btn" onClick={() => handleSearch()}>
+                Search
+              </button>
+            </div>
+
+            {suggestions.length > 0 && (
+              <ul className="suggestions-list" data-aos="fade-up">
+                {suggestions.map((s, i) => (
+                  <li key={i} onClick={() => onSuggestionClick(s)}>
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
-
-          {suggestions.length > 0 && (
-            <ul className="suggestions-list">
-              {suggestions.map((s, i) => (
-                <li key={i} onClick={() => onSuggestionClick(s)}>
-                  {s}
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
 
-        {loading ? <p className="loading-text">Loading recipes...</p> : <FoodCards recipes={recipes} />}
+        {/* 🔹 Full-width FoodCards Section */}
+        <div className="cards-container" data-aos="fade-up">
+          {loading ? (
+            <p className="loading-text">Loading recipes...</p>
+          ) : (
+            <FoodCards recipes={recipes} />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
