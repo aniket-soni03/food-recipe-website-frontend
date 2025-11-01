@@ -1,0 +1,7 @@
+/* NutritionPage.css */
+.nutrition-wrap { padding:1.25rem; font-family:"Poppins",sans-serif; }
+.inner { max-width:900px; margin:0 auto; }
+.back-link { text-decoration:none; color:#4f46e5; display:inline-block; margin-bottom:0.6rem; }
+.nutri-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-top:1rem; }
+.nutri-item { background:#fff; padding:1rem; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+.nutri-item.full { grid-column:1/-1; }
