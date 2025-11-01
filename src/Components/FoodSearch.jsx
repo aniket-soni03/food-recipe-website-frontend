@@ -113,9 +113,12 @@ const FoodSearch = () => {
   };
 
   // keep localInput in sync when context searchQuery changes (e.g., on back/navigation)
-  useEffect(() => {
-    setLocalInput(searchQuery || "");
-  }, [searchQuery]);
+useEffect(() => {
+  setLocalInput(searchQuery || "");
+  // ✅ Prevent re-showing suggestions when returning from another page
+  setSuggestions([]);
+}, [searchQuery]);
+
 
   return (
     <div className="foodsearch-wrap">

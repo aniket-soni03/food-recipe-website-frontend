@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import "./NutritionPage.css";
 
-const API_KEY =  "0764da071c364f24bce1b40ad91f4be3"; // replace with env var in production
+const API_KEY = "0764da071c364f24bce1b40ad91f4be3"; // replace with env var in production
 
 const NutritionPage = () => {
   const { id } = useParams();
@@ -15,7 +15,9 @@ const NutritionPage = () => {
     const load = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`https://api.spoonacular.com/recipes/${id}/nutritionWidget.json?apiKey=${API_KEY}`);
+        const res = await fetch(
+          `https://api.spoonacular.com/recipes/${id}/nutritionWidget.json?apiKey=${API_KEY}`
+        );
         if (!res.ok) throw new Error("No nutrition");
         const data = await res.json();
         setNutri(data);
@@ -30,20 +32,42 @@ const NutritionPage = () => {
   }, [id]);
 
   return (
-    <div className="nutrition-wrap">
-      <div className="inner">
-        <Link to="/" className="back-link">← Back to search</Link>
-        <h2>Nutrition Details</h2>
+    <div id="nutrition-container" className="nutrition-wrap">
+      <div className="nutrition-inner">
+        <Link to="/" id="back-btn" className="back-link">
+          ← Back to Search
+        </Link>
+        <h2 className="nutrition-heading">🍽️ Nutrition Details</h2>
 
-        {loading && <p>Loading nutrition...</p>}
-        {!loading && !nutri && <p>No nutrition data available for this recipe.</p>}
+        {loading && <p className="nutrition-loading">Loading nutrition...</p>}
+        {!loading && !nutri && (
+          <p className="nutrition-empty">
+            No nutrition data available for this recipe.
+          </p>
+        )}
+
         {nutri && (
-          <div className="nutri-grid">
-            <div className="nutri-item"><h4>Calories</h4><p>{nutri.calories}</p></div>
-            <div className="nutri-item"><h4>Carbs</h4><p>{nutri.carbs}</p></div>
-            <div className="nutri-item"><h4>Fat</h4><p>{nutri.fat}</p></div>
-            <div className="nutri-item"><h4>Protein</h4><p>{nutri.protein}</p></div>
-            <div className="nutri-item full"><h4>Servings</h4><p>{nutri.servings || "N/A"}</p></div>
+          <div id="nutrition-grid" className="nutri-grid">
+            <div className="nutri-item">
+              <h4 className="nutri-title">Calories</h4>
+              <p className="nutri-value">{nutri.calories}</p>
+            </div>
+            <div className="nutri-item">
+              <h4 className="nutri-title">Carbs</h4>
+              <p className="nutri-value">{nutri.carbs}</p>
+            </div>
+            <div className="nutri-item">
+              <h4 className="nutri-title">Fat</h4>
+              <p className="nutri-value">{nutri.fat}</p>
+            </div>
+            <div className="nutri-item">
+              <h4 className="nutri-title">Protein</h4>
+              <p className="nutri-value">{nutri.protein}</p>
+            </div>
+            <div className="nutri-item full">
+              <h4 className="nutri-title">Servings</h4>
+              <p className="nutri-value">{nutri.servings || "N/A"}</p>
+            </div>
           </div>
         )}
       </div>

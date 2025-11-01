@@ -5,6 +5,7 @@ import Navbar from "./Components/NavBar";
 import FoodSearch from "./Components/FoodSearch";
 import NutritionPage from "./Components/NutritionPage";
 import CartPage from "./Components/CartPage";
+import ScrollToTop from "./Components/ScrollToTop"; // ✅ add this import
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <Navbar />
+        <ScrollToTop /> {/* ✅ Keep inside router context */}
         <FoodSearch />
       </>
     ),
@@ -21,6 +23,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <Navbar />
+        <ScrollToTop /> {/* ✅ works here */}
         <NutritionPage />
       </>
     ),
@@ -30,6 +33,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <Navbar />
+        <ScrollToTop />
         <CartPage />
       </>
     ),
