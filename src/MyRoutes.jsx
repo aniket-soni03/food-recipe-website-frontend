@@ -1,11 +1,12 @@
-// src/routes/MyRoutes.jsx
+// src/MyRoutes.jsx
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Navbar from "./Components/NavBar";
 import FoodSearch from "./Components/FoodSearch";
 import NutritionPage from "./Components/NutritionPage";
 import CartPage from "./Components/CartPage";
-import ScrollToTop from "./Components/ScrollToTop"; // ✅ add this import
+import ScrollToTop from "./Components/ScrollToTop";
+import Hero from "./Components/Hero"; // ✅ correct path
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,8 @@ const router = createBrowserRouter([
     element: (
       <>
         <Navbar />
-        <ScrollToTop /> {/* ✅ Keep inside router context */}
+        <ScrollToTop />
+        <Hero />        {/* ✅ Hero section shows before search */}
         <FoodSearch />
       </>
     ),
@@ -23,7 +25,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <Navbar />
-        <ScrollToTop /> {/* ✅ works here */}
+        <ScrollToTop />
         <NutritionPage />
       </>
     ),

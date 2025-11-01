@@ -1,7 +1,8 @@
 // src/Components/CardAnimation.jsx
 import React from "react";
-import Tilt from "react-parallax-tilt";
 import "./CardAnimation.css";
+import Tilt from "react-parallax-tilt";
+
 
 const CardAnimation = ({ children, dataAos }) => (
   <Tilt

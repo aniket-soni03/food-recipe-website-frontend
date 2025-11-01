@@ -2,13 +2,16 @@
 .cards-wrapper {
   margin-top: 2rem;
   padding: 1rem;
+  max-width: 1800px; /* 🟩 Wider container so 4 cards fit per row */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* === GRID === */
 .cards-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center; /* 🟩 Keeps grid centered */
   gap: 1.5rem;
 }
 
@@ -137,6 +140,18 @@
 }
 
 /* === RESPONSIVE === */
+@media (max-width: 1400px) {
+  .cards-wrapper {
+    max-width: 1300px; /* 🟨 3 cards per row */
+  }
+}
+
+@media (max-width: 1000px) {
+  .cards-wrapper {
+    max-width: 900px; /* 🟧 2 cards per row */
+  }
+}
+
 @media (max-width: 768px) {
   .recipe-card {
     width: 100%;
@@ -156,7 +171,6 @@
     font-size: 0.95rem;
   }
 }
-
 
 /* === IMAGE SHIMMER PLACEHOLDER === */
 .img-shimmer {

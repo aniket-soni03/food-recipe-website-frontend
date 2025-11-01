@@ -1,5 +1,6 @@
 // src/App.jsx
 import React from "react";
+import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import { CartProvider } from "./Components/CartContext";
 import { SearchProvider } from "./Components/SearchContext";
@@ -11,7 +12,6 @@ const App = () => (
   <SearchProvider>
     <CartProvider>
       <RouterProvider router={router} />
-      {/* ✅ One global ToastContainer */}
       <ToastContainer
         autoClose={2000}
         newestOnTop
