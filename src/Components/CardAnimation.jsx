@@ -1,6 +1,6 @@
 // src/Components/CardAnimation.jsx
 import React from "react";
-import "./CardAnimation.css";
+import "./styles/CardAnimation.css";
 import Tilt from "react-parallax-tilt";
 
 

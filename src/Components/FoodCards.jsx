@@ -1,6 +1,6 @@
 // src/Components/FoodCards.jsx
 import React from "react";
-import "./FoodCardsCss.css";
+import "./styles/FoodCardsCss.css";
 import CardAnimation from "./CardAnimation";
 import UseAos from "./UseAos";
 import { useCart } from "./CartContext";

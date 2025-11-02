@@ -1,6 +1,6 @@
 // src/Components/FoodMenu.jsx
 import React from "react";
-import "./FoodMenu.css";
+import "./styles/FoodMenu.css";
 import UseAos from "./UseAos"; // ✅ You already use this for scroll animations
 
 import paneerIcon from "../assets/icons/paneer.png";
@@ -57,7 +57,7 @@ const FoodMenu = ({ onCategorySelect }) => {
     ];
 
     return (
-        <div className="foodmenu-container" data-aos="fade-up" data-aos-duration="800">
+        <div className="foodmenu-container" data-aos="fade-up" data-aos-duration="800"  id="menu" >
             <h2 className="foodmenu-title">🍽️ Explore Our Menu</h2>
 
             <div className="foodmenu-grid">

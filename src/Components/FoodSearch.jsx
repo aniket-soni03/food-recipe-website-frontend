@@ -2,12 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import FoodCards from "./FoodCards";
 import CardAnimation from "./CardAnimation";
 import { useSearch } from "./SearchContext";
-import "./FoodSearchCss.css";
+import "./styles/FoodSearchCss.css";
 import FoodMenu from "./FoodMenu";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-const API_KEY = "8ef078be40b7421fba9355bef04a32c1";
+const API_KEY = "10e00cae09244bbb9d5786fc7ad3ffe";
 
 const FoodSearch = () => {
   const { recipes, setRecipes, searchQuery, setSearchQuery } = useSearch();
@@ -166,7 +166,7 @@ const FoodSearch = () => {
         <FoodMenu onCategorySelect={(category) => handleSearch(category)} />
       </div>
 
-      <div className="foodsearch-wrap" data-aos="fade-up">
+      <div className="foodsearch-wrap" data-aos="fade-up" id="search">
         <CardAnimation />
 
         {/* 🔹 Search Section */}

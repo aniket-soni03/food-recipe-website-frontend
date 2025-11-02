@@ -1,6 +1,6 @@
 // src/Components/Demo.jsx
 import React, { useEffect, useState, useRef } from "react";
-import "./Hero.css";
+import "./styles/Hero.css";
 
 import food1 from "../assets/food-images/food1.jpg";
 import food2 from "../assets/food-images/food2.jpg";

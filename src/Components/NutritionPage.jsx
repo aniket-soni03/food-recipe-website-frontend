@@ -1,9 +1,9 @@
 // src/pages/NutritionPage.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import "./NutritionPage.css";
+import "./styles/NutritionPage.css";
 
-const API_KEY = "8ef078be40b7421fba9355bef04a32c1";
+const API_KEY = "10e00cae09244bbb9d5786fc7ad3ffe";
 
 const NutritionPage = () => {
   const { id } = useParams();
