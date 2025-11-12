@@ -13,7 +13,7 @@ export const CartProvider = ({ children }) => {
       const found = prev.find((p) => p.id === recipe.id);
 
       if (found) {
-        // ✅ Toast fires immediately, outside React render timing
+        // Toast fires 
         setTimeout(() => {
           toast.info(`${recipe.title} quantity increased!`, {
             position: "top-right",

@@ -1,7 +1,7 @@
 // src/Components/FoodMenu.jsx
 import React from "react";
 import "./styles/FoodMenu.css";
-import UseAos from "./UseAos"; // ✅ You already use this for scroll animations
+import UseAos from "./UseAos"; 
 
 import paneerIcon from "../assets/icons/paneer.png";
 import chickenIcon from "../assets/icons/chicken.png";
@@ -16,7 +16,7 @@ import mexicanIcon from "../assets/icons/mexican.png";
 const FoodMenu = ({ onCategorySelect }) => {
     UseAos(); // Initialize AOS for scroll animations
 
-    // ✅ Popular food categories with small image URLs (you can replace with your own later)
+    // Popular food categories with small image
     const categories = [
         {
             name: "Paneer",

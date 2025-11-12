@@ -12,7 +12,7 @@ const Footer = () => {
     AOS.init({ duration: 1000, once: true });
   }, []);
 
-  // 🌟 Smooth scroll to section if on homepage
+  // Smooth scroll to section if on homepage
   const handleNavigate = (sectionId, path = "/") => {
     if (window.location.pathname !== path) {
       navigate(path);

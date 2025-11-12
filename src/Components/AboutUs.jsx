@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles/AboutUsCss.css";
-import aboutImg from "../assets/icons/about-chef.png"; // 🧑‍🍳 your chef/food image (place any PNG in assets)
+import aboutImg from "../assets/icons/about-chef.png"; // chef/food image 
 
 const AboutUs = () => {
   return (

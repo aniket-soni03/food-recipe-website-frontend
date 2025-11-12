@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles/Blog.css";
 
-// ✅ Importing local images from your folder
+// Importing local images 
 import indian from "../assets/blog-images/indian-dishes.jpg";
 import breakfast from "../assets/blog-images/healthy-breakfast.jpg";
 import paneer from "../assets/blog-images/paneer-dishes.jpg";

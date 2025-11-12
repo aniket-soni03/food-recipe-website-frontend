@@ -19,7 +19,7 @@ const FoodSearch = () => {
   const cuisines = ["Indian", "Italian", "Mexican", "Chinese", "American", "Thai", "French"];
   const ingredients = ["chicken", "tomato", "onion", "garlic", "cheese", "egg", "pasta", "rice", "potato", "fish"];
 
-  // ✅ Initialize AOS
+  // Initialize AOS
   useEffect(() => {
     Aos.init({
       duration: 800,
@@ -29,19 +29,19 @@ const FoodSearch = () => {
     });
   }, []);
 
-  // ✅ Refresh AOS when recipes change
+  // Refresh AOS when recipes change
   useEffect(() => {
     Aos.refresh();
   }, [recipes]);
 
-  // ✅ Show default recipes when first loaded
+  // Show default recipes when first loaded
   useEffect(() => {
     if (!searchQuery && recipes.length === 0) {
       handleSearch("paneer"); // default search
     }
   }, []); // only on mount
 
-  // ✅ Live suggestions
+  // Live suggestions
   useEffect(() => {
     const run = async () => {
       if (localInput.trim().length < 2) {
@@ -69,7 +69,7 @@ const FoodSearch = () => {
     return () => clearTimeout(t);
   }, [localInput]);
 
-  // ✅ Close suggestions on outside click
+  // Close suggestions on outside click
   useEffect(() => {
     const onDoc = (e) => {
       if (inputRef.current && !inputRef.current.contains(e.target))
@@ -79,7 +79,7 @@ const FoodSearch = () => {
     return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
-  // ✅ Fetch helpers
+  // Fetch helpers
   const fetchVideos = async (q) => {
     try {
       const res = await fetch(
@@ -127,7 +127,7 @@ const FoodSearch = () => {
     });
   };
 
-  // ✅ Perform search
+  // Perform search
   const handleSearch = async (customQuery) => {
     const q = (customQuery ?? localInput).trim();
     if (!q) return;

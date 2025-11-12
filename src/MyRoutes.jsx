@@ -18,12 +18,12 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <ScrollToTop />
-        <div id="hero"><Hero /></div>            {/* 🎥 Hero section */}
-        <div id="foodsearch"><FoodSearch /></div> {/* 🍲 Main food search */}
-        <div id="about"><AboutUs /></div>         {/* 🧩 About Us section */}
-        <div id="blog"><Blog /></div>             {/* 📰 Blog / Tips section */}
-        <div id="contact"><ContactUs /></div>     {/* 💌 Contact Us section */}
-        <Footer />                                {/* 🌅 Footer section */}
+        <div id="hero"><Hero /></div>     
+        <div id="foodsearch"><FoodSearch /></div>
+        <div id="about"><AboutUs /></div>      
+        <div id="blog"><Blog /></div>             
+        <div id="contact"><ContactUs /></div>    
+        <Footer />                           
       </>
     ),
   },
